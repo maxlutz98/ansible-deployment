@@ -1,0 +1,14 @@
+- hosts: all
+  roles:
+    - update
+  tags: update
+
+- hosts: all
+  roles:
+    - tool-installation
+  tags: tool-installation
+
+- hosts: all
+  roles:
+    - docker
+  tags: docker
