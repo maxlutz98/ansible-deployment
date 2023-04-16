@@ -1,8 +1,9 @@
 ---
 
 - name: Upgrade all packages on servers
-  become: yes
-  apt:
+  become: true
+  become_user: root
+  ansible.builtin.apt:
     update_cache: yes
     cache_valid_time: 3600
     upgrade: dist
@@ -14,8 +15,9 @@
     path: /var/run/reboot-required
 
 - name: Reboot the box if kernel updated
-  become: yes
-  reboot:
+  become: true
+  become_user: root
+  ansible.builtin.reboot:
     msg: "Reboot initiated by Ansible for kernel updates"
     connect_timeout: 5
     reboot_timeout: 300
