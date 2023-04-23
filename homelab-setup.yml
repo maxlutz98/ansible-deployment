@@ -1,0 +1,32 @@
+- name: Include a play for updating all machines
+  ansible.builtin.import_playbook: update-machines.yml
+
+- name: Install docker on the specified machines
+  hosts: docker
+  roles:
+    - docker
+
+- name: Setup monitoring git
+  hosts: monitoring
+  roles:
+    - monitoring
+
+- name: Setup admin-agents git
+  hosts: docker
+  roles:
+    - admin-agents
+
+- name: Setup firezone machine
+  hosts: firezone
+  roles:
+    - firezone
+
+- name: Setup tvheadend machine
+  hosts: tvheadend
+  roles:
+    - tvheadend
+
+- name: Setup homeautomation git
+  hosts: homeautomation
+  roles:
+    - home-automation
