@@ -13,16 +13,3 @@
 
 - ansible.builtin.debug:
     var: myoutput
-
-# - name: Install firezone with the provided automatic installation script
-#   ansible.builtin.expect:
-#     command: bash /tmp/install.sh
-#     echo: true
-#     creates: /home/debian/installed
-#     responses:
-#       "administrator email": "max.lutz98@me.com"
-#       "desired installation directory": ""
-#       "external URL": "https://firezone.lutz.fyi"
-#       "enable automatic SSL cert provisioning": "n"
-#       "product feedback": "n"
-#       "crash and performance logs": "y"
