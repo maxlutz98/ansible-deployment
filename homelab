@@ -1,11 +1,10 @@
-proxmox ansible_host=192.168.200.20
 monitoring ansible_host=192.168.200.21
 homeautomation ansible_host=192.168.200.23
 firezone ansible_host=192.168.200.22
 tvheadend ansible_host=192.168.200.30
 
 
-[containers]
+[vms]
 monitoring
 homeautomation
 firezone

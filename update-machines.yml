@@ -1,4 +1,4 @@
 - name: Update packages on all machines
-  hosts: containers
+  hosts: all
   roles:
     - update
