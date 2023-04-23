@@ -1,0 +1,3 @@
+---
+# Default ansible variables
+ansible_user: debian
