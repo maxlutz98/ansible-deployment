@@ -1,4 +1,0 @@
----
-api_host: "{{ hostvars['proxmox'].ansible_host }}"
-api_user: root@pam
-node: blackpanther
