@@ -1,5 +1,5 @@
 resource "proxmox_vm_qemu" "tvheadend" {
-  count = 1
+  count = 2
   name = "tvheadend"
   target_node = var.proxmox_host
 
@@ -14,7 +14,7 @@ resource "proxmox_vm_qemu" "tvheadend" {
   cores = 1
   sockets = 1
   cpu = "host"
-  memory = 1024
+  memory = 2048
   scsihw = "virtio-scsi-single"
   bootdisk = "scsi0"
   disk {
