@@ -1,6 +1,6 @@
 resource "proxmox_vm_qemu" "monitoring" {
   count = 1
-  name = "monitoring2"
+  name = "monitoring"
   target_node = var.proxmox_host
 
   vmid = 100

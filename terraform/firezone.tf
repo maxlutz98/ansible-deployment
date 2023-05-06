@@ -1,6 +1,6 @@
 resource "proxmox_vm_qemu" "firezone" {
   count = 1
-  name = "firezone2"
+  name = "firezone"
   target_node = var.proxmox_host
 
   vmid = 101

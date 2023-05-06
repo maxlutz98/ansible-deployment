@@ -1,6 +1,6 @@
 resource "proxmox_vm_qemu" "homeautomation" {
   count = 1
-  name = "homeautomation2"
+  name = "homeautomation"
   target_node = var.proxmox_host
 
   vmid = 102

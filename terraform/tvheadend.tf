@@ -1,6 +1,6 @@
 resource "proxmox_vm_qemu" "tvheadend" {
   count = 1
-  name = "tvheadend2"
+  name = "tvheadend"
   target_node = var.proxmox_host
 
   vmid = 110
