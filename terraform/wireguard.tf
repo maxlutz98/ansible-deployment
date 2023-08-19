@@ -1,11 +1,11 @@
-resource "proxmox_vm_qemu" "firezone" {
+resource "proxmox_vm_qemu" "wireguard" {
   count = 1
-  name = "firezone"
+  name = "wireguard"
   target_node = var.proxmox_host
 
   vmid = 101
   full_clone = true
-  desc = "firezone vpn server"
+  desc = "wireguard vpn server"
 
   clone = var.template_name
   agent = 1

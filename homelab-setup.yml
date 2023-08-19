@@ -21,10 +21,10 @@
   roles:
     - admin-agents
 
-- name: Setup firezone machine
-  hosts: firezone
+- name: Setup wireguard machine
+  hosts: wireguard
   roles:
-    - firezone
+    - wireguard
 
 - name: Setup tvheadend machine
   hosts: tvheadend
