@@ -7,9 +7,20 @@
 
 - name: Install firezone with the provided automatic installation script
   ansible.builtin.shell:
-    cmd: printf 'max.lutz98@me.com\n\nhttps://firezone.lutz.fyi\nn\nn\ny\n\n' | /tmp/install.sh
-    creates: /home/debian/.firezone
+    cmd: printf 'max.lutz98@me.com\n/home/debian/firezone\nhttps://firezone.lutz.fyi\nn\ny\n\n' | /tmp/install.sh
+    creates: /home/debian/firezone
   register: myoutput
 
 - ansible.builtin.debug:
     var: myoutput
+
+- name: Create and start firezone services
+  community.docker.docker_compose:
+    project_src: firezone
+    pull: true
+    remove_orphans: true
+    state: present
+  register: output
+
+- ansible.builtin.debug:
+    var: output
