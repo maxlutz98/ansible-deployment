@@ -1,0 +1,11 @@
+---
+
+- name: Install qemu-guest-agent
+  become: true
+  become_user: root
+  ansible.builtin.apt:
+    name:
+      - qemu-guest-agent
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600

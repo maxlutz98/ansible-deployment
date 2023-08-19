@@ -1,3 +1,8 @@
+- name: Install qemu-guest-agent
+  hosts: vms
+  roles:
+    - qemu-agent
+
 - name: Include a play for updating all machines
   ansible.builtin.import_playbook: update-machines.yml
 
