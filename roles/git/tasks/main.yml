@@ -1,0 +1,11 @@
+---
+
+- name: Install git
+  become: true
+  become_user: root
+  apt:
+    name:
+      - git
+      - git-lfs
+    state: latest
+    update_cache: yes
