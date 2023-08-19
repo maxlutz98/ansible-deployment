@@ -6,11 +6,6 @@
 - name: Include a play for updating all machines
   ansible.builtin.import_playbook: update-machines.yml
 
-- name: Install docker on the specified machines
-  hosts: docker
-  roles:
-    - docker
-
 - name: Setup monitoring git
   hosts: monitoring
   roles:
