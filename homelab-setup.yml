@@ -12,7 +12,7 @@
     - monitoring
 
 - name: Setup admin-agents git
-  hosts: docker
+  hosts: vms
   roles:
     - admin-agents
 
