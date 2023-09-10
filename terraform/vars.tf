@@ -8,7 +8,7 @@ variable "proxmox_host" {
     default = "blackpanther"
 }
 variable "template_name" {
-  default = "debian11-cloud"
+  default = "debian12-cloud"
 }
 variable "token_id" {
   default = "terraform@pam!terraform_token_id"
