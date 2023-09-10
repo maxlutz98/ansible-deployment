@@ -15,6 +15,8 @@
     dest: "/home/debian/{{ inventory_hostname_short }}-agents/.env"
 
 - name: Create and start admin-agents services
+  vars:
+    ansible_python_interpreter: "{{ docker_venv }}/bin/python"
   community.docker.docker_compose:
     project_src: "{{ inventory_hostname_short }}-agents"
     pull: true
