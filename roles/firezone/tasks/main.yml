@@ -16,7 +16,7 @@
 
 - name: Create and start firezone services
   community.docker.docker_compose_v2:
-    project_src: firezone
+    project_src: /home/debian/firezone
     pull: always
     remove_orphans: true
     state: present

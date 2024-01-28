@@ -16,7 +16,7 @@
 
 - name: Create and start admin-agents services
   community.docker.docker_compose_v2:
-    project_src: "{{ inventory_hostname_short }}-agents"
+    project_src: "/home/debian/{{ inventory_hostname_short }}-agents"
     pull: always
     remove_orphans: true
     state: present

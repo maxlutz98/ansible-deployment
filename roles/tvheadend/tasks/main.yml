@@ -11,7 +11,7 @@
 
 - name: Stop tvheadend services
   community.docker.docker_compose_v2:
-    project_src: tvheadend
+    project_src: /home/debian/tvheadend
     remove_orphans: true
     state: absent
 
@@ -27,7 +27,7 @@
 
 - name: Create and start tvheadend services
   community.docker.docker_compose_v2:
-    project_src: tvheadend
+    project_src: /home/debian/tvheadend
     pull: always
     remove_orphans: true
     state: present

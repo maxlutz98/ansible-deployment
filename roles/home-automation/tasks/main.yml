@@ -11,7 +11,7 @@
 
 - name: Create and start home automation services
   community.docker.docker_compose_v2:
-    project_src: fhem-docker
+    project_src: /home/debian/fhem-docker
     pull: always
     remove_orphans: true
     state: present

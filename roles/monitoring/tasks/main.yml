@@ -11,7 +11,7 @@
 
 - name: Create and start administration services
   community.docker.docker_compose_v2:
-    project_src: administration
+    project_src: /home/debian/administration
     pull: always
     remove_orphans: true
     state: present
