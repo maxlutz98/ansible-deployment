@@ -10,11 +10,9 @@
     update: yes
 
 - name: Create and start administration services
-  vars:
-    ansible_python_interpreter: "{{ docker_venv }}/bin/python"
-  community.docker.docker_compose:
+  community.docker.docker_compose_v2:
     project_src: administration
-    pull: true
+    pull: always
     remove_orphans: true
     state: present
   register: output

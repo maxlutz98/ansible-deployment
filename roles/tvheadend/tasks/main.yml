@@ -10,9 +10,7 @@
     update: yes
 
 - name: Stop tvheadend services
-  vars:
-    ansible_python_interpreter: "{{ docker_venv }}/bin/python"
-  community.docker.docker_compose:
+  community.docker.docker_compose_v2:
     project_src: tvheadend
     remove_orphans: true
     state: absent
@@ -28,11 +26,9 @@
     state: mounted
 
 - name: Create and start tvheadend services
-  vars:
-    ansible_python_interpreter: "{{ docker_venv }}/bin/python"
-  community.docker.docker_compose:
+  community.docker.docker_compose_v2:
     project_src: tvheadend
-    pull: true
+    pull: always
     remove_orphans: true
     state: present
   register: output

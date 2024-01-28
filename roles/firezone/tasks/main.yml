@@ -15,11 +15,9 @@
     var: myoutput
 
 - name: Create and start firezone services
-  vars:
-    ansible_python_interpreter: "{{ docker_venv }}/bin/python"
-  community.docker.docker_compose:
+  community.docker.docker_compose_v2:
     project_src: firezone
-    pull: true
+    pull: always
     remove_orphans: true
     state: present
   register: output
