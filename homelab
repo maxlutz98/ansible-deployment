@@ -2,6 +2,7 @@ monitoring ansible_host=192.168.200.21
 homeautomation ansible_host=192.168.200.23
 wireguard ansible_host=192.168.200.22
 tvheadend ansible_host=192.168.200.30
+paperless ansible_host=192.168.200.24
 
 
 [vms]
@@ -9,9 +10,11 @@ monitoring
 homeautomation
 wireguard
 tvheadend
+paperless
 
 [docker]
 monitoring
 homeautomation
 wireguard
 tvheadend
+paperless
