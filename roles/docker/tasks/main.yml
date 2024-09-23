@@ -1,62 +1,41 @@
 ---
-
-- name: Install all docker dependencies
+- name: Handle docker dependencies and installation
   become: true
   become_user: root
-  ansible.builtin.apt:
-    name:
-      - ca-certificates
-      - gnupg
-      - python3-pip
-    state: latest
+  become_method: community.general.doas
+  block:
+    - name: Install docker
+      community.general.apk:
+        update_cache: true
+        name:
+          - docker
+          - docker-cli-compose
+        state: latest
 
-- name: Add Docker GPG apt Key
-  become: true
-  become_user: root
-  apt_key:
-    url: https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg
-    state: present
+    - name: "Adding user to docker group: {{ ansible_user }}"
+      ansible.builtin.user:
+        name: "{{ ansible_user }}"
+        groups: docker
+        append: true
+        state: present
+      register: docker_group
 
-- name: Add Docker Repository
-  become: true
-  become_user: root
-  apt_repository:
-    repo: deb https://download.docker.com/linux/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} stable
-    state: present
+    - name: Reboot the machine to apply group permissions
+      ansible.builtin.reboot:
+        msg: "Reboot initiated by Ansible to apply new group permissions"
+        connect_timeout: 5
+        reboot_timeout: 300
+        pre_reboot_delay: 0
+        post_reboot_delay: 30
+        test_command: uptime
+      when: docker_group.changed
 
-- name: Install docker
-  become: true
-  become_user: root
-  ansible.builtin.apt:
-    update_cache: yes
-    name:
-      - docker-ce
-      - docker-ce-cli
-      - containerd.io
-      - docker-buildx-plugin
-      - docker-compose-plugin
-      - python3-virtualenv
-    state: latest
+    - name: Enable service docker
+      ansible.builtin.service:
+        name: docker
+        enabled: true
 
-- name: Adding {{ ansible_user }} to docker group
-  become: true
-  become_user: root
-  ansible.builtin.user:
-    name: "{{ ansible_user }}"
-    groups: docker
-    append: true
-    state: present
-  register: docker_group
-
-- name: Reboot the machine to apply group permissions
-  become: true
-  become_user: root
-  ansible.builtin.reboot:
-    msg: "Reboot initiated by Ansible to apply new group permissions"
-    connect_timeout: 5
-    reboot_timeout: 300
-    pre_reboot_delay: 0
-    post_reboot_delay: 30
-    test_command: uptime
-  when: docker_group.changed
-
+    - name: Start service docker, if not started
+      ansible.builtin.service:
+        name: docker
+        state: started

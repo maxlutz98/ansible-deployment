@@ -3,19 +3,47 @@
 - name: Clone fhem-docker git
   ansible.builtin.git:
     repo: "http://{{ giteauser | urlencode }}:{{ giteapassword | urlencode }}@192.168.200.5:3000/maximilian/fhem-docker.git"
-    dest: /home/debian/fhem-docker
+    dest: /home/{{ ansible_user }}/fhem-docker
     version: raspbian
     accept_hostkey: true
-    clone: yes
-    update: yes
+    clone: true
+    update: true
+
+- name: Install linux-lts kernel for proper USB drivers
+  become: true
+  become_user: root
+  become_method: community.general.doas
+  community.general.apk:
+    update_cache: true
+    name:
+      - linux-lts
+    state: latest
+
+- name: Remove linux-virt kernel
+  become: true
+  become_user: root
+  become_method: community.general.doas
+  community.general.apk:
+    name: linux-virt
+    state: absent
+  register: kernel_update
+
+- name: Reboot the machine to apply new kernel
+  become: true
+  become_user: root
+  become_method: community.general.doas
+  ansible.builtin.reboot:
+    msg: "Reboot initiated by Ansible to apply new kernel"
+    connect_timeout: 5
+    reboot_timeout: 300
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+    test_command: uptime
+  when: kernel_update.changed
 
 - name: Create and start home automation services
   community.docker.docker_compose_v2:
-    project_src: /home/debian/fhem-docker
+    project_src: /home/{{ ansible_user }}/fhem-docker
     pull: always
     remove_orphans: true
     state: present
-  register: output
-
-- ansible.builtin.debug:
-    var: output

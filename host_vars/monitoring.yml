@@ -1,3 +1,3 @@
 ---
 # Default ansible variables
-ansible_user: debian
+ansible_user: alpine

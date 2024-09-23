@@ -3,21 +3,55 @@
 - name: Clone tvheadend git
   ansible.builtin.git:
     repo: "http://{{ giteauser | urlencode }}:{{ giteapassword | urlencode }}@192.168.200.5:3000/maximilian/tvheadend.git"
-    dest: /home/debian/tvheadend
+    dest: /home/{{ ansible_user }}/tvheadend
     version: master
     accept_hostkey: true
-    clone: yes
-    update: yes
+    clone: true
+    update: true
 
 - name: Stop tvheadend services
   community.docker.docker_compose_v2:
-    project_src: /home/debian/tvheadend
+    project_src: /home/{{ ansible_user }}/tvheadend
     remove_orphans: true
     state: absent
+
+- name: Install mount package and linux-lts kernel
+  become: true
+  become_user: root
+  become_method: community.general.doas
+  community.general.apk:
+    update_cache: true
+    name:
+      - mount
+      - linux-lts
+    state: latest
+
+- name: Remove linux-virt kernel
+  become: true
+  become_user: root
+  become_method: community.general.doas
+  community.general.apk:
+    name: linux-virt
+    state: absent
+  register: kernel_update
+
+- name: Reboot the machine to apply new kernel
+  become: true
+  become_user: root
+  become_method: community.general.doas
+  ansible.builtin.reboot:
+    msg: "Reboot initiated by Ansible to apply new kernel"
+    connect_timeout: 5
+    reboot_timeout: 300
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+    test_command: uptime
+  when: kernel_update.changed
 
 - name: Mount data from NAS
   become: true
   become_user: root
+  become_method: community.general.doas
   ansible.posix.mount:
     src: //192.168.200.5/data
     path: /data
@@ -27,11 +61,7 @@
 
 - name: Create and start tvheadend services
   community.docker.docker_compose_v2:
-    project_src: /home/debian/tvheadend
+    project_src: /home/{{ ansible_user }}/tvheadend
     pull: always
     remove_orphans: true
     state: present
-  register: output
-
-- ansible.builtin.debug:
-    var: output

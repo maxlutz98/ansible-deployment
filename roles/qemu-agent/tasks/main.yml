@@ -3,9 +3,25 @@
 - name: Install qemu-guest-agent
   become: true
   become_user: root
-  ansible.builtin.apt:
+  become_method: community.general.doas
+  community.general.apk:
     name:
       - qemu-guest-agent
     state: latest
-    update_cache: yes
-    cache_valid_time: 3600
+    update_cache: true
+
+- name: Enable service qemu-guest-agent
+  become: true
+  become_user: root
+  become_method: community.general.doas
+  ansible.builtin.service:
+    name: qemu-guest-agent
+    enabled: true
+
+- name: Start service qemu-guest-agent, if not started
+  become: true
+  become_user: root
+  become_method: community.general.doas
+  ansible.builtin.service:
+    name: qemu-guest-agent
+    state: started

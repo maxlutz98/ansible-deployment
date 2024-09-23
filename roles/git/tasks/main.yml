@@ -3,9 +3,10 @@
 - name: Install git
   become: true
   become_user: root
-  apt:
+  become_method: community.general.doas
+  community.general.apk:
     name:
       - git
       - git-lfs
     state: latest
-    update_cache: yes
+    update_cache: true

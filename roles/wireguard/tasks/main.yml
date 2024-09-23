@@ -3,19 +3,15 @@
 - name: Clone wireguard git
   ansible.builtin.git:
     repo: "http://{{ giteauser | urlencode }}:{{ giteapassword | urlencode }}@192.168.200.5:3000/maximilian/wireguard.git"
-    dest: /home/debian/wireguard
+    dest: /home/{{ ansible_user }}/wireguard
     version: master
     accept_hostkey: true
-    clone: yes
-    update: yes
+    clone: true
+    update: true
 
 - name: Create and start wireguard services
   community.docker.docker_compose_v2:
-    project_src: /home/debian/wireguard
+    project_src: /home/{{ ansible_user }}/wireguard
     pull: always
     remove_orphans: true
     state: present
-  register: output
-
-- ansible.builtin.debug:
-    var: output
