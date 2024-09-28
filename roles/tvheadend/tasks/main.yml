@@ -59,6 +59,15 @@
     fstype: cifs
     state: mounted
 
+- name: Enable netmount on boot
+  become: true
+  become_user: root
+  become_method: community.general.doas
+  ansible.builtin.service:
+    name: netmount
+    enabled: true
+    runlevel: boot
+
 - name: Create and start tvheadend services
   community.docker.docker_compose_v2:
     project_src: /home/{{ ansible_user }}/tvheadend
