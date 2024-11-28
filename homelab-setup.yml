@@ -11,11 +11,6 @@
   roles:
     - monitoring
 
-- name: Setup admin-agents git
-  hosts: vms
-  roles:
-    - admin-agents
-
 - name: Setup wireguard machine
   hosts: wireguard
   roles:
