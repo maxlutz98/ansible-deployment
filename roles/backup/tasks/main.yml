@@ -1,0 +1,21 @@
+---
+
+- name: Compress user home directory
+  become: true
+  become_user: root
+  become_method: community.general.doas
+  community.general.archive:
+    path: /home/{{ ansible_user }}/*
+    dest: /tmp/{{ inventory_hostname_short }}.tgz
+    mode: '600'
+
+- name: Fetching backup archives
+  ansible.builtin.fetch:
+    src: /tmp/{{ inventory_hostname_short }}.tgz
+    dest: backup/
+    flat: true
+
+- name: Remove archive file
+  ansible.builtin.file:
+    path: /tmp/{{ inventory_hostname_short }}.tgz
+    state: absent
