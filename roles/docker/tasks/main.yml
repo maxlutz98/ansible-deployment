@@ -10,6 +10,8 @@
         name:
           - docker
           - docker-cli-compose
+          - python3
+          - py3-requests
         state: latest
 
     - name: "Adding user to docker group: {{ ansible_user }}"
