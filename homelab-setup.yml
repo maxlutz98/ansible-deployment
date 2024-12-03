@@ -6,6 +6,16 @@
 - name: Include a play for updating all machines
   ansible.builtin.import_playbook: update-machines.yml
 
+- name: Setup adguardhome git
+  hosts: adguardhome
+  roles:
+    - adguardhome
+
+- name: Setup homepage git
+  hosts: homepage
+  roles:
+    - homepage
+
 - name: Setup monitoring git
   hosts: monitoring
   roles:

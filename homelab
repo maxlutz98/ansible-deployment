@@ -1,20 +1,28 @@
+adguardhome ansible_host=192.168.200.11
+homepage ansible_host=192.168.200.12
 monitoring ansible_host=192.168.200.21
-homeautomation ansible_host=192.168.200.23
 wireguard ansible_host=192.168.200.22
-tvheadend ansible_host=192.168.200.30
+homeautomation ansible_host=192.168.200.23
 paperless ansible_host=192.168.200.24
+tvheadend ansible_host=192.168.200.30
 
 
 [vms]
-monitoring
 homeautomation
-wireguard
-tvheadend
+monitoring
 paperless
+tvheadend
+wireguard
+
+[lxc]
+adguardhome
+homepage
 
 [docker]
-monitoring
+adguardhome
+homepage
 homeautomation
-wireguard
-tvheadend
+monitoring
 paperless
+tvheadend
+wireguard

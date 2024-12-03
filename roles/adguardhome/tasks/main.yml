@@ -1,0 +1,17 @@
+---
+
+- name: Clone adguardhome git
+  ansible.builtin.git:
+    repo: "http://{{ giteauser | urlencode }}:{{ giteapassword | urlencode }}@192.168.200.5:3000/maximilian/adguardhome.git"
+    dest: "/home/{{ ansible_user }}/adguardhome"
+    version: main
+    accept_hostkey: true
+    clone: true
+    update: true
+
+- name: Create and start adguardhome service
+  community.docker.docker_compose_v2:
+    project_src: "/home/{{ ansible_user }}/adguardhome"
+    pull: always
+    remove_orphans: true
+    state: present
