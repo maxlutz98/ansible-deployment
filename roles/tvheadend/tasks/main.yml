@@ -47,26 +47,6 @@
     name: linux-virt
     state: absent
 
-- name: Mount data from NAS
-  become: true
-  become_user: root
-  become_method: community.general.doas
-  ansible.posix.mount:
-    src: //192.168.200.5/data
-    path: /data
-    opts: "rw,vers=3,dom=ARBEITSGRUPPE,username={{ ad_username }},password={{ ad_password }},uid=1000,gid=1000"
-    fstype: cifs
-    state: mounted
-
-- name: Enable netmount on boot
-  become: true
-  become_user: root
-  become_method: community.general.doas
-  ansible.builtin.service:
-    name: netmount
-    enabled: true
-    runlevel: boot
-
 - name: Create and start tvheadend services
   community.docker.docker_compose_v2:
     project_src: /home/{{ ansible_user }}/tvheadend
