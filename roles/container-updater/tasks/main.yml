@@ -15,7 +15,7 @@
     dest: "/home/{{ ansible_user }}/container-updater/watchtower.env"
     mode: '0644'
 
-- name: Create and start administration services
+- name: Create and start container-updater services
   community.docker.docker_compose_v2:
     project_src: /home/{{ ansible_user }}/container-updater
     pull: always
