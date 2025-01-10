@@ -18,6 +18,8 @@
     name:
       - linux-lts
     state: latest
+  changed_when: true
+  notify: Reboot machine
 
 - name: Remove linux-virt kernel
   become: true
@@ -27,19 +29,6 @@
     name: linux-virt
     state: absent
   register: kernel_update
-
-- name: Reboot the machine to apply new kernel
-  become: true
-  become_user: root
-  become_method: community.general.doas
-  ansible.builtin.reboot:
-    msg: "Reboot initiated by Ansible to apply new kernel"
-    connect_timeout: 5
-    reboot_timeout: 300
-    pre_reboot_delay: 0
-    post_reboot_delay: 30
-    test_command: uptime
-  when: kernel_update.changed
 
 - name: Create and start home automation services
   community.docker.docker_compose_v2:
