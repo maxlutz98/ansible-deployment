@@ -31,6 +31,12 @@
   roles:
     - tvheadend
 
+
+- name: Setup container-updater on tvheadend machine
+  hosts: tvheadend
+  roles:
+    - container-updater
+
 - name: Setup homeautomation git
   hosts: homeautomation
   roles:
