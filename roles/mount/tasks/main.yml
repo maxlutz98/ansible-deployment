@@ -5,7 +5,7 @@
   become_method: community.general.doas
   ansible.posix.mount:
     src: "{{ network_drive }}"
-    path: /data
+    path: "{{ mount_target }}"
     opts: "rw,vers=3,dom=ARBEITSGRUPPE,username={{ ad_username }},password={{ ad_password }},uid=1000,gid=1000"
     fstype: cifs
     state: mounted

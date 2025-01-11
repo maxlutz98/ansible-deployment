@@ -2,3 +2,5 @@
 # Default ansible variables
 ansible_user: alpine
 network_drive: //192.168.200.5/data
+mount_target: /data
+ad_username: tvheadend
