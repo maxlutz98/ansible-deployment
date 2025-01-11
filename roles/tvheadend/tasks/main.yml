@@ -35,7 +35,6 @@
       - mount
       - linux-lts
     state: latest
-  register: kernel_update
   changed_when: true
   notify: Reboot machine
 

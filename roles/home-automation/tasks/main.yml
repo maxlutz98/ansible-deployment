@@ -28,7 +28,6 @@
   community.general.apk:
     name: linux-virt
     state: absent
-  register: kernel_update
 
 - name: Create and start home automation services
   community.docker.docker_compose_v2:
