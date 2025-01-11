@@ -18,7 +18,6 @@
     name:
       - linux-lts
     state: latest
-  changed_when: true
   notify: Reboot machine
 
 - name: Remove linux-virt kernel
