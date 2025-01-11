@@ -9,6 +9,25 @@
       - mount
     state: latest
 
+- name: Install linux-lts kernel
+  become: true
+  become_user: root
+  become_method: community.general.doas
+  community.general.apk:
+    update_cache: true
+    name:
+      - linux-lts
+    state: latest
+  notify: Reboot machine
+
+- name: Remove linux-virt kernel
+  become: true
+  become_user: root
+  become_method: community.general.doas
+  community.general.apk:
+    name: linux-virt
+    state: absent
+
 - name: Mount data from NAS
   become: true
   become_user: root
