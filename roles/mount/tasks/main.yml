@@ -1,4 +1,14 @@
 ---
+- name: Install mount package
+  become: true
+  become_user: root
+  become_method: community.general.doas
+  community.general.apk:
+    update_cache: true
+    name:
+      - mount
+    state: latest
+
 - name: Mount data from NAS
   become: true
   become_user: root
