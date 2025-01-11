@@ -9,12 +9,6 @@
     clone: true
     update: true
 
-- name: Stop tvheadend services
-  community.docker.docker_compose_v2:
-    project_src: /home/{{ ansible_user }}/tvheadend
-    remove_orphans: true
-    state: absent
-
 - name: Create and start tvheadend services
   community.docker.docker_compose_v2:
     project_src: /home/{{ ansible_user }}/tvheadend
