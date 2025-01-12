@@ -1,0 +1,8 @@
+---
+
+- name: Create and start arr-services services
+  community.docker.docker_compose_v2:
+    project_src: /home/{{ ansible_user }}/arr-services
+    pull: always
+    remove_orphans: true
+    state: present

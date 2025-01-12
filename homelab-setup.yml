@@ -31,6 +31,10 @@
   roles:
     - tvheadend
 
+- name: Setup arr-services on tvheadend machine
+  hosts: tvheadend
+  roles:
+    - arr-services
 
 - name: Setup container-updater on tvheadend machine
   hosts: tvheadend
