@@ -1,0 +1,8 @@
+---
+
+- name: Create and start stirling-pdf services
+  community.docker.docker_compose_v2:
+    project_src: /home/{{ ansible_user }}/stirling-pdf
+    pull: always
+    remove_orphans: true
+    state: present

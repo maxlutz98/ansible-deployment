@@ -26,6 +26,12 @@
   roles:
     - wireguard
 
+- name: Setup paperless machine
+  hosts: paperless
+  roles:
+    - paperless-ngx
+    - stirling-pdf
+
 - name: Setup tvheadend machine
   hosts: tvheadend
   roles:
