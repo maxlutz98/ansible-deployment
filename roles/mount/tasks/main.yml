@@ -7,6 +7,7 @@
     update_cache: true
     name:
       - mount
+      - nfs-utils
     state: latest
 
 - name: Install linux-lts kernel
@@ -35,8 +36,8 @@
   ansible.posix.mount:
     src: "{{ network_drive }}"
     path: "{{ mount_target }}"
-    opts: "rw,vers=3,dom=ARBEITSGRUPPE,username={{ ad_username }},password={{ ad_password }},uid=1000,gid=1000"
-    fstype: cifs
+    opts: "rw,async,hard,relatime"
+    fstype: nfs
     state: mounted
 
 - name: Enable netmount on boot
