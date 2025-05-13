@@ -1,8 +1,8 @@
 ---
 
-- name: Create and start paperless-ngx services
+- name: Create and start stirling-pdf services
   community.docker.docker_compose_v2:
-    project_src: /home/{{ ansible_user }}/paperless-ngx
+    project_src: /home/{{ ansible_user }}/stirling-pdf
     pull: always
     remove_orphans: true
     state: present
