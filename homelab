@@ -1,4 +1,5 @@
 adguardhome ansible_host=192.168.200.11
+adguardhome-nw ansible_host=192.168.210.11
 homepage ansible_host=192.168.200.12
 monitoring ansible_host=192.168.200.21
 wireguard ansible_host=192.168.200.22
@@ -18,6 +19,7 @@ reverse-proxy
 
 [lxc]
 adguardhome
+adguardhome-nw
 homepage
 
 [docker]

@@ -7,7 +7,7 @@
   ansible.builtin.import_playbook: update-machines.yml
 
 - name: Setup adguardhome git
-  hosts: adguardhome
+  hosts: adguardhome, adguardhome-nw
   roles:
     - adguardhome
 
