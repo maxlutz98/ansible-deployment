@@ -5,6 +5,7 @@ wireguard ansible_host=192.168.200.22
 homeautomation ansible_host=192.168.200.23
 paperless ansible_host=192.168.200.24
 tvheadend ansible_host=192.168.200.30
+reverse-proxy ansible_host=192.168.200.28
 
 
 [vms]
@@ -13,6 +14,7 @@ monitoring
 paperless
 tvheadend
 wireguard
+reverse-proxy
 
 [lxc]
 adguardhome
@@ -26,3 +28,4 @@ monitoring
 paperless
 tvheadend
 wireguard
+reverse-proxy

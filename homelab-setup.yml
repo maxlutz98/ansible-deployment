@@ -39,6 +39,12 @@
     - arr-services
     - container-updater
 
+- name: Docker
+  hosts: reverse-proxy
+  roles:
+    - git
+    - docker
+
 - name: Setup homeautomation git
   hosts: homeautomation
   roles:
