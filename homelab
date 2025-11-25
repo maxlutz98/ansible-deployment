@@ -31,3 +31,12 @@ paperless
 tvheadend
 wireguard
 reverse-proxy
+
+[alpine]
+adguardhome
+adguardhome-nw
+homepage
+homeautomation
+paperless
+tvheadend
+reverse-proxy
