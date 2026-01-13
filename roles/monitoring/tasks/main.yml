@@ -2,7 +2,7 @@
 
 - name: Clone administration git
   ansible.builtin.git:
-    repo: "http://{{ giteauser | urlencode }}:{{ giteapassword | urlencode }}@192.168.200.5:3000/maximilian/administration.git"
+    repo: "http://{{ giteauser | urlencode }}:{{ giteapassword | urlencode }}@192.168.200.21:3000/maximilian/administration.git"
     dest: /home/{{ ansible_user }}/administration
     version: master
     accept_hostkey: true

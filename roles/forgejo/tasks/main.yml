@@ -1,0 +1,17 @@
+---
+
+- name: Clone forgejo git
+  ansible.builtin.git:
+    repo: "http://{{ giteauser | urlencode }}:{{ giteapassword | urlencode }}@192.168.200.21:3000/maximilian/forgejo.git"
+    dest: /home/{{ ansible_user }}/forgejo
+    version: main
+    accept_hostkey: true
+    clone: true
+    update: true
+
+- name: Create and start forgejo services
+  community.docker.docker_compose_v2:
+    project_src: /home/{{ ansible_user }}/forgejo
+    pull: always
+    remove_orphans: true
+    state: present

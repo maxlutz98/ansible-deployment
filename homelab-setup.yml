@@ -16,10 +16,15 @@
   roles:
     - homepage
 
-- name: Setup monitoring git
+# - name: Setup monitoring git
+#   hosts: monitoring
+#   roles:
+#     - monitoring
+
+- name: Setup forgejo git
   hosts: monitoring
   roles:
-    - monitoring
+    - forgejo
 
 - name: Setup wireguard machine
   hosts: wireguard
