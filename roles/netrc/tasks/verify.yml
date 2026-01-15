@@ -1,0 +1,14 @@
+- name: Check .netrc file permissions
+  ansible.builtin.stat:
+    path: "{{ netrc_path }}"
+  register: netrc_stat
+
+- name: Fail if .netrc permissions are insecure
+  ansible.builtin.assert:
+    that:
+      - netrc_stat.stat.exists
+      - netrc_stat.stat.mode == "0600"
+      - netrc_stat.stat.pw_name == netrc_owner
+    fail_msg: >
+      .netrc must exist, be owned by {{ netrc_owner }}
+      and have permissions 0600.

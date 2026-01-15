@@ -1,0 +1,8 @@
+- name: Create .netrc file
+  ansible.builtin.template:
+    src: netrc.j2
+    dest: "{{ netrc_path }}"
+    owner: "{{ netrc_owner }}"
+    group: "{{ netrc_group }}"
+    mode: "{{ netrc_mode }}"
+  no_log: true

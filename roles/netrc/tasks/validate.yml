@@ -1,0 +1,16 @@
+- name: Validate netrc_entries structure
+  ansible.builtin.assert:
+    that:
+      - netrc_entries is iterable
+      - netrc_entries | length > 0
+      - item.machine is defined
+      - item.login is defined
+      - item.password is defined
+      - item.machine | length > 0
+      - item.login | length > 0
+      - item.password | length > 0
+    fail_msg: >
+      netrc_entries must be a list of entries with
+      machine, login and password defined and non-empty.
+  loop: "{{ netrc_entries }}"
+  no_log: true

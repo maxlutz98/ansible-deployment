@@ -1,8 +1,6 @@
-- name: Ensure .netrc file is created
-  ansible.builtin.template:
-    src: netrc.j2
-    dest: "{{ netrc_path }}"
-    owner: "{{ netrc_owner }}"
-    group: "{{ netrc_group }}"
-    mode: "{{ netrc_mode }}"
-  no_log: true
+- name: Validate given data
+  ansible.builtin.import_tasks: validate.yml
+- name: Create .netrc files
+  ansible.builtin.import_tasks: render.yml
+- name: Ensure the file permissions are correct
+  ansible.builtin.import_tasks: verify.yml
