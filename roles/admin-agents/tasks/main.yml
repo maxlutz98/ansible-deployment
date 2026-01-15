@@ -2,7 +2,7 @@
 
 - name: Clone admin-agents git
   ansible.builtin.git:
-    repo: "http://{{ giteauser | urlencode }}:{{ giteapassword | urlencode }}@192.168.200.21:3000/maximilian/admin-agents.git"
+    repo: "http://192.168.200.21:3000/maximilian/admin-agents.git"
     dest: "/home/{{ ansible_user }}/{{ inventory_hostname_short }}-agents"
     version: master
     accept_hostkey: true

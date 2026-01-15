@@ -1,0 +1,8 @@
+# Managed by Ansible — DO NOT EDIT
+
+{% for entry in netrc_entries %}
+machine {{ entry.machine }}
+  login {{ entry.login }}
+  password {{ entry.password }}
+
+{% endfor %}

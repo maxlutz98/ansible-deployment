@@ -2,7 +2,7 @@
 
 - name: Clone tvheadend git
   ansible.builtin.git:
-    repo: "http://{{ giteauser | urlencode }}:{{ giteapassword | urlencode }}@192.168.200.21:3000/maximilian/tvheadend.git"
+    repo: "http://192.168.200.21:3000/maximilian/tvheadend.git"
     dest: /home/{{ ansible_user }}/tvheadend
     version: master
     accept_hostkey: true

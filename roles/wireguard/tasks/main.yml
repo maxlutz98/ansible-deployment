@@ -2,7 +2,7 @@
 
 - name: Clone wireguard git
   ansible.builtin.git:
-    repo: "http://{{ giteauser | urlencode }}:{{ giteapassword | urlencode }}@192.168.200.21:3000/maximilian/wireguard.git"
+    repo: "http://192.168.200.21:3000/maximilian/wireguard.git"
     dest: /home/{{ ansible_user }}/wireguard
     version: master
     accept_hostkey: true

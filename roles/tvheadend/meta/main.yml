@@ -3,3 +3,4 @@ dependencies:
   - role: git
   - role: docker
   - role: mount
+  - role: netrc

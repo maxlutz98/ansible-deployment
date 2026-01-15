@@ -2,7 +2,7 @@
 
 - name: Clone forgejo git
   ansible.builtin.git:
-    repo: "http://{{ giteauser | urlencode }}:{{ giteapassword | urlencode }}@192.168.200.21:3000/maximilian/forgejo.git"
+    repo: "http://192.168.200.21:3000/maximilian/forgejo.git"
     dest: /home/{{ ansible_user }}/forgejo
     version: main
     accept_hostkey: true

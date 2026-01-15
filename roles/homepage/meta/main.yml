@@ -2,3 +2,4 @@
 dependencies:
   - role: git
   - role: docker
+  - role: netrc
