@@ -26,11 +26,6 @@
   roles:
     - forgejo
 
-- name: Setup wireguard machine
-  hosts: wireguard
-  roles:
-    - wireguard
-
 - name: Setup paperless machine
   hosts: paperless
   roles:
