@@ -1,0 +1,70 @@
+---
+
+- name: Validate komodo_install_type
+  ansible.builtin.assert:
+    that:
+      - komodo_install_type in ['periphery', 'core']
+    fail_msg: >
+      example_role_action must be one of: periphery, core
+
+
+- name: Get docker group entry
+  ansible.builtin.getent:
+    database: group
+    key: docker
+  register: komodo_docker_group
+
+- name: Set docker_gid fact
+  ansible.builtin.set_fact:
+    komodo_docker_gid: "{{ komodo_docker_group.ansible_facts.getent_group.docker[1] }}"
+
+- name: Clone administration git
+  ansible.builtin.git:
+    repo: "http://192.168.200.21:3000/maximilian/administration.git"
+    dest: /home/{{ ansible_user }}/administration
+    version: main
+    accept_hostkey: true
+    clone: true
+    update: true
+
+- name: Create .env file
+  ansible.builtin.template:
+    src: .env.j2
+    dest: "/home/{{ ansible_user }}/administration/.env"
+    mode: '0644'
+
+- name: Create periphery directory
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - /home/{{ ansible_user }}/administration/periphery
+
+- name: Create komodo core volume directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - /home/{{ ansible_user }}/administration/komodo-core
+    - /home/{{ ansible_user }}/administration/mongo
+  when: komodo_install_type == 'core'
+
+- name: Create and start komodo core
+  community.docker.docker_compose_v2:
+    project_src: /home/{{ ansible_user }}/administration
+    pull: always
+    remove_orphans: true
+    files: core.compose.yml
+    state: present
+  when: komodo_install_type == 'core'
+
+- name: Create and start komdo periphery
+  community.docker.docker_compose_v2:
+    project_src: /home/{{ ansible_user }}/administration
+    pull: always
+    remove_orphans: true
+    files: periphery.compose.yml
+    state: present
+  when: komodo_install_type == 'periphery'

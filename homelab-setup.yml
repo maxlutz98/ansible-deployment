@@ -16,10 +16,10 @@
   roles:
     - homepage
 
-# - name: Setup monitoring git
-#   hosts: monitoring
-#   roles:
-#     - monitoring
+- name: Setup komodo git
+  hosts: docker
+  roles:
+    - komodo
 
 - name: Setup forgejo git
   hosts: monitoring
@@ -45,10 +45,10 @@
     - git
     - docker
 
-- name: Setup homeautomation git
-  hosts: homeautomation
-  roles:
-    - home-automation
+# - name: Setup homeautomation git
+#   hosts: homeautomation
+#   roles:
+#     - home-automation
 
 - name: Prune docker artefacts
   hosts: docker
