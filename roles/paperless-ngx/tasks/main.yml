@@ -1,5 +1,20 @@
 ---
 
+- name: Clone paperless-ngx git
+  ansible.builtin.git:
+    repo: "http://192.168.200.21:3000/maximilian/paperless-ngx.git"
+    dest: /home/{{ ansible_user }}/reverse-proxy
+    version: main
+    accept_hostkey: true
+    clone: true
+    update: true
+
+- name: Create docker-compose.env file with PAPERLESS_SECRET_KEY
+  ansible.builtin.template:
+    src: docker-compose.env.j2
+    dest: "/home/{{ ansible_user }}/reverse-proxy/docker-compose.env"
+    mode: '0644'
+
 - name: Create and start paperless-ngx services
   community.docker.docker_compose_v2:
     project_src: /home/{{ ansible_user }}/paperless-ngx

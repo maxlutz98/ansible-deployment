@@ -42,8 +42,7 @@
 - name: Docker
   hosts: reverse-proxy
   roles:
-    - git
-    - docker
+    - reverse-proxy
 
 # - name: Setup homeautomation git
 #   hosts: homeautomation
