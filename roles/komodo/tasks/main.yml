@@ -29,8 +29,8 @@
 
 - name: Create .env file
   ansible.builtin.template:
-    src: .env.j2
-    dest: "/home/{{ ansible_user }}/administration/.env"
+    src: secret.env.j2
+    dest: "/home/{{ ansible_user }}/administration/secret.env"
     mode: '0644'
 
 - name: Create periphery directory
