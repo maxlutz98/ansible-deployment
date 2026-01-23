@@ -3,7 +3,7 @@
 - name: Clone container-updater repository
   ansible.builtin.git:
     repo: "http://192.168.200.21:3000/maximilian/container-updater.git"
-    dest: /home/{{ ansible_user }}/container-updater
+    dest: {{ container_updater_repo_dir }}
     version: main
     accept_hostkey: true
     clone: true
@@ -12,12 +12,12 @@
 - name: Create watchtower.env file with PUSHOVER keys and hostname
   ansible.builtin.template:
     src: watchtower.env.j2
-    dest: "/home/{{ ansible_user }}/container-updater/watchtower.env"
+    dest: "{{ container_updater_repo_dir }}/watchtower.env"
     mode: '0644'
 
 - name: Create and start container-updater services
   community.docker.docker_compose_v2:
-    project_src: /home/{{ ansible_user }}/container-updater
+    project_src: {{ container_updater_repo_dir }}
     pull: always
     remove_orphans: true
     state: present

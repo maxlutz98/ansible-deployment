@@ -1,0 +1,1 @@
+forgejo_repo_dir: "/home/{{ ansible_user }}/forgejo"

@@ -1,0 +1,1 @@
+homepage_repo_dir: "/home/{{ ansible_user }}/homepage"

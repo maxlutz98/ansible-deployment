@@ -1,0 +1,1 @@
+stirling_pdf_repo_dir: "/home/{{ ansible_user }}/stirling-pdf"

@@ -21,7 +21,7 @@
 - name: Clone administration git
   ansible.builtin.git:
     repo: "http://192.168.200.21:3000/maximilian/administration.git"
-    dest: /home/{{ ansible_user }}/administration
+    dest: {{ komodo_repo_dir }}
     version: main
     accept_hostkey: true
     clone: true
@@ -30,7 +30,7 @@
 - name: Create .env file
   ansible.builtin.template:
     src: secret.env.j2
-    dest: "/home/{{ ansible_user }}/administration/secret.env"
+    dest: "{{ komodo_repo_dir }}/secret.env"
     mode: '0644'
 
 - name: Create periphery directory
@@ -39,7 +39,7 @@
     state: directory
     mode: '0755'
   loop:
-    - /home/{{ ansible_user }}/administration/periphery
+    - {{ komodo_repo_dir }}/periphery
 
 - name: Create komodo core volume directories
   ansible.builtin.file:
@@ -47,13 +47,13 @@
     state: directory
     mode: '0755'
   loop:
-    - /home/{{ ansible_user }}/administration/komodo-core
-    - /home/{{ ansible_user }}/administration/mongo
+    - "{{ komodo_repo_dir }}/komodo-core"
+    - "{{ komodo_repo_dir }}/mongo"
   when: komodo_install_type == 'core'
 
 - name: Create and start komodo core
   community.docker.docker_compose_v2:
-    project_src: /home/{{ ansible_user }}/administration
+    project_src: {{ komodo_repo_dir }}
     pull: always
     remove_orphans: true
     files: core.compose.yml
@@ -62,7 +62,7 @@
 
 - name: Create and start komdo periphery
   community.docker.docker_compose_v2:
-    project_src: /home/{{ ansible_user }}/administration
+    project_src: {{ komodo_repo_dir }}
     pull: always
     remove_orphans: true
     files: periphery.compose.yml

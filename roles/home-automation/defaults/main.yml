@@ -1,0 +1,1 @@
+home_automation_repo_dir: "/home/{{ ansible_user }}/fhem-docker"
