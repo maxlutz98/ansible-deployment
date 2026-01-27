@@ -1,68 +1,69 @@
+resource "proxmox_virtual_environment_vm" "this" {
+  name      = var.vm_name
+  node_name = var.vm_target_node
+  vm_id = var.vm_id
 
-resource "proxmox_vm_qemu" "alpine-test" {
-  name        = var.vm_name
-  vmid        = var.vm_id
-  target_node = var.vm_target_node
+  clone {
+    vm_id = 9400
+    full  = true
+  }
 
-  clone      = "alpine-cloud"
-  full_clone = true
-  os_type    = "cloud-init"
+  on_boot = var.vm_start_at_node_boot
 
-  start_at_node_boot = var.vm_start_at_node_boot
+  tablet_device = false
 
-  agent = 1
-  scsihw = "virtio-scsi-single"
-  boot        = "order=scsi0"
-  vm_state    = "running"
-  automatic_reboot = true
-  tablet = false
+  scsi_hardware = "virtio-scsi-single"
 
-  cpu { 
-    cores = var.vm_cpu_cores 
-    sockets = 1 
+  agent {
+    # NOTE: The agent is installed and enabled as part of the cloud-init configuration in the template VM, see cloud-config.tf
+    # The working agent is *required* to retrieve the VM IP addresses.
+    # If you are using a different cloud-init configuration, or a different clone source
+    # that does not have the qemu-guest-agent installed, you may need to disable the `agent` below and remove the `vm_ipv4_address` output.
+    # See https://registry.terraform.io/providers/bpg/proxmox/latest/docs/resources/virtual_environment_vm#qemu-guest-agent for more details.
+    enabled = true
+    trim = true
+  }
+
+  cpu {
+    cores = var.vm_cpu_cores
     type = "host"
   }
-  balloon = var.vm_balloon
-  memory = var.vm_memory
 
-  serial {
-    id = 0
+  memory {
+    dedicated = var.vm_memory
+    floating   = var.vm_balloon
   }
 
-  network {
-    id     = 0
-    model  = "virtio"
+  network_device {
     bridge = "vmbr0"
   }
 
-  disks {
-    scsi {
-      scsi0 {
-        disk {
-          storage = "local-zfs"
-          size    = var.vm_disk_size 
-          iothread = true
-          discard = true
-        }
-      }
-    }
-    ide {
-      ide0 {
-        cloudinit {
-          storage = "local-zfs"
-        }
-      }
-    }
+  disk {
+    datastore_id = "local-zfs"
+    interface    = "scsi0"
+    iothread     = true
+    discard      = "on"
+    size         = var.vm_disk_size
   }
 
-  ciupgrade = true
-  sshkeys   = file("${var.vm_ssh_key_file}")
-  ipconfig0 = "ip=${var.vm_ip},gw=${var.vm_gateway}"
+  serial_device {}
 
-  lifecycle {    
-    ignore_changes = [
-      clone,
-      full_clone
-    ]
+  initialization {
+    datastore_id = "local-zfs"
+    ip_config {
+      ipv4 {
+        address = var.vm_ip
+        gateway = var.vm_gateway
+      }
+    }
+
+    user_account {
+      # keys     = [trimspace(data.local_file.ssh_public_key.content)]
+      keys     = [trimspace(file("${var.vm_ssh_key_file}"))]
+    }
   }
+}
+
+output "vm_ipv4_address" {
+  value = proxmox_virtual_environment_vm.this.ipv4_addresses[1][0]
 }

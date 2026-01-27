@@ -6,7 +6,7 @@ locals {
       vm_cpu_cores          = 2
       vm_memory             = 2048
       vm_balloon            = 1024
-      vm_disk_size          = "8G"
+      vm_disk_size          = 8
       vm_ssh_key_file       = "~/.ssh/id_rsa.pub"
       vm_start_at_node_boot = true
       vm_ip                 = "192.168.200.133/32"

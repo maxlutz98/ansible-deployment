@@ -29,8 +29,8 @@ variable "vm_start_at_node_boot" {
   default = false
 }
 variable "vm_disk_size" {
-  type = string
-  description = "Size of the VM disk"
+  type = number
+  description = "Size of the VM disk in GB"
 }
 variable "vm_ssh_key_file" {
   type = string

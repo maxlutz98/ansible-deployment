@@ -1,14 +1,10 @@
-variable "pm_api_url" {
+variable "pm_endpoint" {
     type = string
-    description = "Proxmox Host API URL"
+    description = "Proxmox Host endpoint"
 }
-variable "pm_api_token_id" {
+variable "pm_api_token" {
     type = string
-    description = "Proxmox Host API Token ID"
-}
-variable "pm_api_token_secret" {
-    type = string
-    description = "Proxmox Host API Token Secret"
+    description = "Proxmox API token"
 }
 
 variable "vm_name" {
