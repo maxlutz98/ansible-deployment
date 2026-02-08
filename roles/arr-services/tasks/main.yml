@@ -3,7 +3,7 @@
 - name: Clone arr-services git
   ansible.builtin.git:
     repo: "http://192.168.200.21:3000/maximilian/arr-services.git"
-    dest: {{ arr_services_repo_dir  }}
+    dest: "{{ arr_services_repo_dir  }}"
     version: main
     accept_hostkey: true
     clone: true
@@ -11,7 +11,7 @@
 
 - name: Create and start arr-services services
   community.docker.docker_compose_v2:
-    project_src: {{ arr_services_repo_dir }}
+    project_src: "{{ arr_services_repo_dir }}"
     pull: always
     remove_orphans: true
     state: present

@@ -3,7 +3,7 @@
 - name: Clone container-updater repository
   ansible.builtin.git:
     repo: "http://192.168.200.21:3000/maximilian/container-updater.git"
-    dest: {{ container_updater_repo_dir }}
+    dest: "{{ container_updater_repo_dir }}"
     version: main
     accept_hostkey: true
     clone: true
@@ -17,7 +17,7 @@
 
 - name: Create and start container-updater services
   community.docker.docker_compose_v2:
-    project_src: {{ container_updater_repo_dir }}
+    project_src: "{{ container_updater_repo_dir }}"
     pull: always
     remove_orphans: true
     state: present

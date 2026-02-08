@@ -3,7 +3,7 @@
 - name: Clone reverse-proxy git
   ansible.builtin.git:
     repo: "http://192.168.200.21:3000/maximilian/reverse-proxy.git"
-    dest: {{ reverse_proxy_repo_dir }}
+    dest: "{{ reverse_proxy_repo_dir }}"
     version: main
     accept_hostkey: true
     clone: true
@@ -17,7 +17,7 @@
 
 - name: Create and start reverse-proxy services
   community.docker.docker_compose_v2:
-    project_src: {{ reverse_proxy_repo_dir }}
+    project_src: "{{ reverse_proxy_repo_dir }}"
     pull: always
     remove_orphans: true
     state: present

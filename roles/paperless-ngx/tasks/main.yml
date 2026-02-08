@@ -3,7 +3,7 @@
 - name: Clone paperless-ngx git
   ansible.builtin.git:
     repo: "http://192.168.200.21:3000/maximilian/paperless-ngx.git"
-    dest: {{ paperless_ngx_repo_dir }}
+    dest: "{{ paperless_ngx_repo_dir }}"
     version: main
     accept_hostkey: true
     clone: true
@@ -17,7 +17,7 @@
 
 - name: Create and start paperless-ngx services
   community.docker.docker_compose_v2:
-    project_src: {{ paperless_ngx_repo_dir }}
+    project_src: "{{ paperless_ngx_repo_dir }}"
     pull: always
     remove_orphans: true
     state: present

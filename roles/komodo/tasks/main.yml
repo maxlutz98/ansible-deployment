@@ -21,7 +21,7 @@
 - name: Clone administration git
   ansible.builtin.git:
     repo: "http://192.168.200.21:3000/maximilian/administration.git"
-    dest: {{ komodo_repo_dir }}
+    dest: "{{ komodo_repo_dir }}"
     version: main
     accept_hostkey: true
     clone: true
@@ -39,7 +39,7 @@
     state: directory
     mode: '0755'
   loop:
-    - {{ komodo_repo_dir }}/periphery
+    - "{{ komodo_repo_dir }}/periphery"
 
 - name: Create komodo core volume directories
   ansible.builtin.file:
@@ -53,7 +53,7 @@
 
 - name: Create and start komodo core
   community.docker.docker_compose_v2:
-    project_src: {{ komodo_repo_dir }}
+    project_src: "{{ komodo_repo_dir }}"
     pull: always
     remove_orphans: true
     files: core.compose.yml
@@ -62,7 +62,7 @@
 
 - name: Create and start komdo periphery
   community.docker.docker_compose_v2:
-    project_src: {{ komodo_repo_dir }}
+    project_src: "{{ komodo_repo_dir }}"
     pull: always
     remove_orphans: true
     files: periphery.compose.yml

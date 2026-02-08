@@ -3,7 +3,7 @@
 - name: Clone tvheadend git
   ansible.builtin.git:
     repo: "http://192.168.200.21:3000/maximilian/tvheadend.git"
-    dest: {{ tvheadend_repo_dir }}
+    dest: "{{ tvheadend_repo_dir }}"
     version: master
     accept_hostkey: true
     clone: true
@@ -11,7 +11,7 @@
 
 - name: Create and start tvheadend services
   community.docker.docker_compose_v2:
-    project_src: {{ tvheadend_repo_dir }}
+    project_src: "{{ tvheadend_repo_dir }}"
     pull: always
     remove_orphans: true
     state: present
