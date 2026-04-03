@@ -31,3 +31,6 @@
       ansible.builtin.service:
         name: docker
         state: started
+
+    - name: Flush handlers
+      ansible.builtin.meta: flush_handlers

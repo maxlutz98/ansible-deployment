@@ -22,15 +22,15 @@ module "vms" {
 
   source = "./modules/vm"
 
-  vm_name     = each.key
-  vm_id       = each.value.vm_id
-  vm_target_node = each.value.vm_target_node
-  vm_cpu_cores = each.value.vm_cpu_cores
-  vm_memory   = each.value.vm_memory
-  vm_balloon  = each.value.vm_balloon
-  vm_disk_size = each.value.vm_disk_size
-  vm_ssh_key_file = each.value.vm_ssh_key_file
+  vm_name               = each.key
+  vm_id                 = each.value.vm_id
+  vm_target_node        = each.value.vm_target_node
+  vm_cpu_cores          = each.value.vm_cpu_cores
+  vm_memory             = each.value.vm_memory
+  vm_balloon            = each.value.vm_balloon
+  vm_disk_size          = each.value.vm_disk_size
+  vm_ssh_key_file       = each.value.vm_ssh_key_file
   vm_start_at_node_boot = each.value.vm_start_at_node_boot
-  vm_ip = each.value.vm_ip
-  vm_gateway = each.value.vm_gateway
+  vm_ip                 = each.value.vm_ip
+  vm_gateway            = each.value.vm_gateway
 }

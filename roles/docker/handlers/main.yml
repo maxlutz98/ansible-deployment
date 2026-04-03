@@ -4,7 +4,7 @@
   become_user: root
   become_method: community.general.doas
   ansible.builtin.reboot:
-    msg: "Reboot initiated by Ansible to apply new kernel"
+    msg: "Reboot initiated by Ansible to apply new user permissions"
     connect_timeout: 5
     reboot_timeout: 300
     pre_reboot_delay: 0

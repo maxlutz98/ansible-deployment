@@ -1,4 +1,4 @@
-resource "proxmox_virtual_environment_vm" "this" {
+resource "proxmox_virtual_environment_vm" "vms" {
   name      = var.vm_name
   node_name = var.vm_target_node
   vm_id = var.vm_id
@@ -65,5 +65,5 @@ resource "proxmox_virtual_environment_vm" "this" {
 }
 
 output "vm_ipv4_address" {
-  value = proxmox_virtual_environment_vm.this.ipv4_addresses[1][0]
+  value = proxmox_virtual_environment_vm.vms.ipv4_addresses[1][0]
 }
