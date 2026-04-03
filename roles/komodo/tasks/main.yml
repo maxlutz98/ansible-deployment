@@ -57,6 +57,9 @@
     pull: always
     remove_orphans: true
     files: core.compose.yml
+    env_files:
+      - "{{ komodo_repo_dir }}/secret.env"
+      - "{{ komodo_repo_dir }}/public.env"
     state: present
   when: komodo_install_type == 'core'
 
@@ -66,5 +69,8 @@
     pull: always
     remove_orphans: true
     files: periphery.compose.yml
+    env_files:
+      - "{{ komodo_repo_dir }}/secret.env"
+      - "{{ komodo_repo_dir }}/public.env"
     state: present
   when: komodo_install_type == 'periphery'
