@@ -1,12 +1,17 @@
+
+locals {
+  os_images = {
+    "alpine" = proxmox_download_file.latest_alpine_3_23_3_qcow2.id
+    "debian" = proxmox_download_file.latest_debian_13_trixie_qcow2.id
+  }
+}
+
 resource "proxmox_virtual_environment_vm" "vms" {
   name      = var.vm_name
   node_name = var.vm_target_node
   vm_id = var.vm_id
 
-  clone {
-    vm_id = 9400
-    full  = true
-  }
+  stop_on_destroy = true
 
   on_boot = var.vm_start_at_node_boot
 
@@ -40,6 +45,7 @@ resource "proxmox_virtual_environment_vm" "vms" {
 
   disk {
     datastore_id = "local-zfs"
+    import_from  = local.os_images[var.vm_os]
     interface    = "scsi0"
     iothread     = true
     discard      = "on"
@@ -62,6 +68,22 @@ resource "proxmox_virtual_environment_vm" "vms" {
       keys     = [trimspace(file("${var.vm_ssh_key_file}"))]
     }
   }
+}
+
+resource "proxmox_download_file" "latest_alpine_3_23_3_qcow2" {
+  content_type       = "import"
+  datastore_id       = "local"
+  file_name          = "generic_alpine-3.23.3-x86_64-bios-cloudinit-r0.qcow2"
+  node_name          = var.vm_target_node
+  url                = "https://dl-cdn.alpinelinux.org/alpine/v3.23/releases/cloud/generic_alpine-3.23.3-x86_64-bios-cloudinit-r0.qcow2"
+}
+
+resource "proxmox_download_file" "latest_debian_13_trixie_qcow2" {
+  content_type = "import"
+  datastore_id = "local"
+  file_name    = "debian-13-generic-amd64.qcow2"
+  node_name    = var.vm_target_node
+  url          = "https://cloud.debian.org/images/cloud/trixie/latest/debian-13-generic-amd64.qcow2"
 }
 
 output "vm_ipv4_address" {

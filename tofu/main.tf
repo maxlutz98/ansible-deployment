@@ -1,6 +1,7 @@
 locals {
   vms = {
     alpine-test = {
+      vm_os                 = "alpine"
       vm_target_node        = var.target_node
       vm_id                 = 910
       vm_cpu_cores          = 2
@@ -23,6 +24,7 @@ module "vms" {
   source = "./modules/vm"
 
   vm_name               = each.key
+  vm_os                 = each.value.vm_os
   vm_id                 = each.value.vm_id
   vm_target_node        = each.value.vm_target_node
   vm_cpu_cores          = each.value.vm_cpu_cores
@@ -33,4 +35,9 @@ module "vms" {
   vm_start_at_node_boot = each.value.vm_start_at_node_boot
   vm_ip                 = each.value.vm_ip
   vm_gateway            = each.value.vm_gateway
+}
+
+output "vm_ipv4_addresses" {
+  description = "Die IP-Adressen der erstellten VMs"
+  value       = { for k, v in module.vms : k => v.vm_ipv4_address }
 }

@@ -44,3 +44,13 @@ variable "vm_gateway" {
   type = string
   description = "Gateway of the VM"
 }
+
+variable "vm_os" {
+  type        = string
+  description = "The operating system to use for the VM (e.g., alpine, debian)"
+  default     = "alpine"
+  validation {
+    condition     = contains(["alpine", "debian"], var.vm_os)
+    error_message = "The vm_os must be either 'alpine' or 'debian'."
+  }
+}
