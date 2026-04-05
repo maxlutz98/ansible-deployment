@@ -1,3 +1,8 @@
+- name: Configure DNS
+  hosts: vms:&alpine
+  roles:
+    - resolv_conf
+
 - name: Install qemu-guest-agent
   hosts: vms
   roles:
