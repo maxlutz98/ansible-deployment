@@ -1,0 +1,5 @@
+resolv_conf_dns_nameservers:
+  - 8.8.8.8
+  - 8.8.4.4
+resolv_conf_dns_search_domains:
+  - local

@@ -1,0 +1,21 @@
+---
+
+- name: Deploy static resolv.conf
+  become: true
+  become_user: root
+  become_method: community.general.doas
+  ansible.builtin.copy:
+    dest: /etc/resolv.conf
+    owner: root
+    group: root
+    mode: '0644'
+    force: false
+    content: |
+      # DNS configuration - managed by Ansible
+      # Do not edit manually
+      {% for ns in resolv_conf_dns_nameservers %}
+      nameserver {{ ns }}
+      {% endfor %}
+      {% if resolv_conf_dns_search_domains | length > 0 %}
+      search {{ resolv_conf_dns_search_domains | join(' ') }}
+      {% endif %}
