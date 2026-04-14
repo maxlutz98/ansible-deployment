@@ -3,7 +3,6 @@
 - name: Deploy static resolv.conf
   become: true
   become_user: root
-  become_method: community.general.doas
   ansible.builtin.copy:
     dest: /etc/resolv.conf
     owner: root

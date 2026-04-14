@@ -2,7 +2,6 @@
 - name: Handle docker dependencies and installation
   become: true
   become_user: root
-  become_method: community.general.doas
   block:
     - name: Install docker
       community.general.apk:

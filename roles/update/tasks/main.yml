@@ -3,7 +3,6 @@
 - name: Upgrade all packages on servers
   become: true
   become_user: root
-  become_method: community.general.doas
   community.general.apk:
     update_cache: true
     upgrade: true
@@ -16,7 +15,6 @@
 - name: Reboot the box if kernel updated
   become: true
   become_user: root
-  become_method: community.general.doas
   ansible.builtin.reboot:
     msg: "Reboot initiated by Ansible for kernel updates"
     connect_timeout: 5

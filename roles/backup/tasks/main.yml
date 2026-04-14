@@ -3,7 +3,6 @@
 - name: Compress user home directory
   become: true
   become_user: root
-  become_method: community.general.doas
   community.general.archive:
     path: /home/{{ ansible_user }}/*
     dest: /tmp/{{ inventory_hostname_short }}.tar.gz

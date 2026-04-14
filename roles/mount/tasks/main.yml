@@ -2,7 +2,6 @@
 - name: Install mount package
   become: true
   become_user: root
-  become_method: community.general.doas
   community.general.apk:
     update_cache: true
     name:
@@ -13,7 +12,6 @@
 - name: Install linux-lts kernel
   become: true
   become_user: root
-  become_method: community.general.doas
   community.general.apk:
     update_cache: true
     name:
@@ -24,7 +22,6 @@
 - name: Remove linux-virt kernel
   become: true
   become_user: root
-  become_method: community.general.doas
   community.general.apk:
     name: linux-virt
     state: absent
@@ -32,7 +29,6 @@
 - name: Mount data from NAS
   become: true
   become_user: root
-  become_method: community.general.doas
   ansible.posix.mount:
     src: "{{ network_drive }}"
     path: "{{ mount_target }}"
@@ -43,7 +39,6 @@
 - name: Enable netmount on boot
   become: true
   become_user: root
-  become_method: community.general.doas
   ansible.builtin.service:
     name: netmount
     enabled: true

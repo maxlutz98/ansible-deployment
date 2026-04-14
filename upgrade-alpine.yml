@@ -4,45 +4,46 @@
     - name: Replace release channel version in alpine apk file
       become: true
       become_user: root
-      become_method: community.general.doas
       ansible.builtin.replace:
         path: /etc/apk/repositories
         regexp: '^(?P<prefix>.+)v3\.20(?P<suffix>.+)$'
         replace: '\g<prefix>v3.22\g<suffix>'
+      register: repo_update
 
     - name: Update repositories as a separate step
       become: true
       become_user: root
-      become_method: community.general.doas
       community.general.apk:
         update_cache: true
+      when: repo_update.changed
 
     - name: Update repositories and update package apk-tools to latest version
       become: true
       become_user: root
-      become_method: community.general.doas
       community.general.apk:
         name: apk-tools
         state: latest
         update_cache: true
+      when: repo_update.changed
 
     - name: Upgrade all packages on servers
       become: true
       become_user: root
-      become_method: community.general.doas
       community.general.apk:
         update_cache: true
         upgrade: true
         available: true
+      when: repo_update.changed
 
     - name: Write cached content to disk
       ansible.builtin.command:
         cmd: sync
+      changed_when: false
+      when: repo_update.changed
 
     - name: Reboot the machine
       become: true
       become_user: root
-      become_method: community.general.doas
       ansible.builtin.reboot:
         msg: "Reboot initiated by Ansible after upgrading alpine release"
         connect_timeout: 5
@@ -50,3 +51,4 @@
         pre_reboot_delay: 0
         post_reboot_delay: 30
         test_command: uptime
+      when: repo_update.changed

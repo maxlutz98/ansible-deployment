@@ -2,7 +2,6 @@
 - name: Reboot machine
   become: true
   become_user: root
-  become_method: community.general.doas
   ansible.builtin.reboot:
     msg: "Reboot initiated by Ansible to apply new kernel"
     connect_timeout: 5
