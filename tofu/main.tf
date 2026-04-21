@@ -1,4 +1,6 @@
 locals {
+  default_gateway = "192.168.200.1"
+  default_ssh_key_file = "~/.ssh/id_rsa.pub"
   vms = {
     alpine-test = {
       vm_os                 = "alpine"
@@ -8,14 +10,13 @@ locals {
       vm_memory             = 2048
       vm_balloon            = 1024
       vm_disk_size          = 8
-      vm_ssh_key_file       = "~/.ssh/id_rsa.pub"
+      vm_ssh_key_file       = local.default_ssh_key_file
       vm_start_at_node_boot = true
       vm_ip                 = "192.168.200.133/32"
-      vm_gateway            = "192.168.200.1"
+      vm_gateway            = local.default_gateway
     }
   }
 }
-
 
 
 module "vms" {

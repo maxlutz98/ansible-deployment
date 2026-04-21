@@ -36,7 +36,7 @@ resource "proxmox_virtual_environment_vm" "vms" {
 
   memory {
     dedicated = var.vm_memory
-    floating  = var.vm_balloon
+    floating  = var.vm_balloon > 0 ? var.vm_balloon : var.vm_memory
   }
 
   network_device {
@@ -59,7 +59,7 @@ resource "proxmox_virtual_environment_vm" "vms" {
     ip_config {
       ipv4 {
         address = var.vm_ip
-        gateway = var.vm_gateway
+        gateway = var.vm_ip == "dhcp" ? null : var.vm_gateway
       }
     }
 

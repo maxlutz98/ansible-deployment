@@ -14,14 +14,17 @@ variable "vm_target_node" {
 variable "vm_cpu_cores" {
   type        = number
   description = "Number of CPU cores"
+  default     = 1
 }
 variable "vm_memory" {
   type        = number
   description = "Amount of memory in MB"
+  default     = 512
 }
 variable "vm_balloon" {
   type        = number
   description = "Minimum amount of memory in MB for ballooning"
+  default     = 0
 }
 variable "vm_start_at_node_boot" {
   type        = bool
@@ -31,6 +34,7 @@ variable "vm_start_at_node_boot" {
 variable "vm_disk_size" {
   type        = number
   description = "Size of the VM disk in GB"
+  default     = 8
 }
 variable "vm_ssh_key_file" {
   type        = string
@@ -38,7 +42,8 @@ variable "vm_ssh_key_file" {
 }
 variable "vm_ip" {
   type        = string
-  description = "IP address of the VM"
+  description = "IP address of the VM in CIDR notation"
+  default     = "dhcp"
 }
 variable "vm_gateway" {
   type        = string
