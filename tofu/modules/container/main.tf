@@ -1,12 +1,12 @@
 
 locals {
   os_templates = {
-    "alpine" = proxmox_file.latest_alpine_3_23_container_template.id
-    "debian" = proxmox_file.latest_debian_13_trixie_container_template.id
+    "alpine" = data.proxmox_file.latest_alpine_3_23_container_template.id
+    "debian" = data.proxmox_file.latest_debian_13_trixie_container_template.id
   }
 }
 
-resource "proxmox_virtual_environment_container" "ubuntu_container" {
+resource "proxmox_virtual_environment_container" "container" {
   description = "Managed by Terraform"
 
   node_name = var.container_target_node
@@ -14,11 +14,11 @@ resource "proxmox_virtual_environment_container" "ubuntu_container" {
 
   start_on_boot = var.container_start_at_node_boot
 
-  # newer linux distributions require unprivileged user namespaces
   unprivileged = true
   features {
     nesting = true
-    keyctl  = true
+    # Can only be set with root@pam
+    # keyctl  = true
   }
 
   cpu {
@@ -62,14 +62,14 @@ resource "proxmox_virtual_environment_container" "ubuntu_container" {
 }
 
 data "proxmox_file" "latest_alpine_3_23_container_template" {
-  node_name    = "pve"
+  node_name    = var.container_target_node
   datastore_id = "local"
   content_type = "vztmpl"
   file_name    = "alpine-3.23-default_20260116_amd64.tar.xz"
 }
 
 data "proxmox_file" "latest_debian_13_trixie_container_template" {
-  node_name    = "pve"
+  node_name    = var.container_target_node
   datastore_id = "local"
   content_type = "vztmpl"
   file_name    = "debian-13-standard_13.1-2_amd64.tar.zst"
