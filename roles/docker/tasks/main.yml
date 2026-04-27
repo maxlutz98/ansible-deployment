@@ -33,3 +33,11 @@
 
     - name: Flush handlers
       ansible.builtin.meta: flush_handlers
+
+    - name: Create directory for stacks
+      ansible.builtin.file:
+        path: /opt/stacks
+        state: directory
+        owner: "{{ ansible_user }}"
+        group: docker
+        mode: '0755'
