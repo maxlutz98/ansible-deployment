@@ -1,1 +1,1 @@
-container_updater_repo_dir: "/home/{{ ansible_user }}/container-updater"
+container_updater_repo_dir: "/opt/stacks/container-updater"

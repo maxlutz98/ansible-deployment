@@ -1,1 +1,1 @@
-adguardhome_repo_dir: "/home/{{ ansible_user }}/adguardhome"
+adguardhome_repo_dir: "/opt/stacks/adguardhome"

@@ -1,1 +1,1 @@
-paperless_ngx_repo_dir: "/home/{{ ansible_user }}/paperless-ngx"
+paperless_ngx_repo_dir: "/opt/stacks/paperless-ngx"

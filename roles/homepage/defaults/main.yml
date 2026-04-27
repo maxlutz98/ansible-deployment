@@ -1,1 +1,1 @@
-homepage_repo_dir: "/home/{{ ansible_user }}/homepage"
+homepage_repo_dir: "/opt/stacks/homepage"

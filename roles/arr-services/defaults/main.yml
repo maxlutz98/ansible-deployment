@@ -1,1 +1,1 @@
-arr_services_repo_dir: "/home/{{ ansible_user }}/arr-services"
+arr_services_repo_dir: "/opt/stacks/arr-services"

@@ -4,7 +4,7 @@
   become: true
   become_user: root
   community.general.archive:
-    path: /home/{{ ansible_user }}/*
+    path: /opt/stacks/*
     dest: /tmp/{{ inventory_hostname_short }}.tar.gz
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"

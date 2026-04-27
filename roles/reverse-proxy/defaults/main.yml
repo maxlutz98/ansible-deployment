@@ -1,1 +1,1 @@
-reverse_proxy_repo_dir: "/home/{{ ansible_user }}/reverse-proxy"
+reverse_proxy_repo_dir: "/opt/stacks/reverse-proxy"

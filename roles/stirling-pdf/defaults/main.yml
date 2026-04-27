@@ -1,1 +1,1 @@
-stirling_pdf_repo_dir: "/home/{{ ansible_user }}/stirling-pdf"
+stirling_pdf_repo_dir: "/opt/stacks/stirling-pdf"
