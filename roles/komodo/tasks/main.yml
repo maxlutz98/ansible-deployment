@@ -63,7 +63,7 @@
     state: present
   when: komodo_install_type == 'core'
 
-- name: Create and start komdo periphery
+- name: Create and start komodo periphery
   community.docker.docker_compose_v2:
     project_src: "{{ komodo_repo_dir }}"
     pull: always
