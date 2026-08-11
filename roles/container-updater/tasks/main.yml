@@ -20,4 +20,4 @@
     project_src: "{{ container_updater_repo_dir }}"
     pull: always
     remove_orphans: true
-    state: present
+    state: absent
