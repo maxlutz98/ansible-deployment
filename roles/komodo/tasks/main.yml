@@ -40,6 +40,7 @@
     mode: '0755'
   loop:
     - "{{ komodo_repo_dir }}/periphery"
+    - "{{ komodo_repo_dir }}/komodo-keys"
 
 - name: Create komodo core volume directories
   ansible.builtin.file:
