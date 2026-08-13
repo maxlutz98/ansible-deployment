@@ -1,11 +1,22 @@
 ---
 
-- name: Install git
+- name: Install Git on Alpine
   become: true
-  become_user: root
   community.general.apk:
     name:
       - git
       - git-lfs
-    state: latest
+    state: present
     update_cache: true
+  when: ansible_facts.os_family == "Alpine"
+
+
+- name: Install Git on Debian/Ubuntu
+  become: true
+  ansible.builtin.apt:
+    name:
+      - git
+      - git-lfs
+    state: present
+    update_cache: true
+  when: ansible_facts.os_family == "Debian"
