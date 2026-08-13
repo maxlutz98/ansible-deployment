@@ -1,0 +1,9 @@
+---
+# Reboot the host when a kernel update requires it.
+system_update_reboot: true
+
+# Automatically remove packages which are no longer required.
+system_update_autoremove: true
+
+# Reboot timeout in seconds.
+system_update_reboot_timeout: 300

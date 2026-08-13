@@ -1,0 +1,59 @@
+- name: Gather Alpine package facts after upgrade
+  become: true
+  ansible.builtin.package_facts:
+    manager: apk
+
+- name: Get installed Alpine kernel package versions
+  ansible.builtin.set_fact:
+    system_update_kernel_packages_before: >-
+      {{
+        ansible_facts.packages
+        | dict2items
+        | selectattr('key', 'match', '^linux-')
+        | items2dict(key_name='key', value_name='value')
+      }}
+
+- name: Upgrade all Alpine packages
+  become: true
+  community.general.apk:
+    update_cache: true
+    upgrade: true
+  register: system_update_apk
+
+- name: Gather Alpine package facts after upgrade
+  become: true
+  ansible.builtin.package_facts:
+    manager: apk
+  when:
+    - system_update_apk.changed
+
+- name: Get installed Alpine kernel package versions after upgrade
+  ansible.builtin.set_fact:
+    system_update_kernel_packages_after: >-
+      {{
+        ansible_facts.packages
+        | dict2items
+        | selectattr('key', 'match', '^linux-')
+        | items2dict(key_name='key', value_name='value')
+      }}
+
+- name: Determine whether Alpine kernel was updated
+  ansible.builtin.set_fact:
+    system_update_reboot_required: >-
+      {{
+        system_update_kernel_packages_before
+        != system_update_kernel_packages_after
+      }}
+
+- name: Reboot host if required
+  become: true
+  ansible.builtin.reboot:
+    msg: "Reboot initiated by Ansible after system updates"
+    connect_timeout: 5
+    reboot_timeout: "{{ system_update_reboot_timeout }}"
+    pre_reboot_delay: 0
+    post_reboot_delay: 30
+    test_command: uptime
+  when:
+    - system_update_reboot
+    - system_update_reboot_required | default(false)

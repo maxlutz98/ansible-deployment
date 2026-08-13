@@ -1,0 +1,9 @@
+---
+
+- name: Update Debian/Ubuntu systems
+  ansible.builtin.import_tasks: alpine.yaml
+  when: ansible_facts.os_family == "Alpine"
+
+- name: Update Debian/Ubuntu systems
+  ansible.builtin.import_tasks: ubuntu.yaml
+  when: ansible_facts.os_family == "Debian"
