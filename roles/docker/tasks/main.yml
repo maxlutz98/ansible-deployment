@@ -1,18 +1,74 @@
 ---
-- name: Handle docker dependencies and installation
+- name: Install Docker (Ubuntu/Debian)
+  become: true
+  become_user: root
+  when: ansible_facts.os_family == "Debian"
+  block:
+    - name: Install all docker dependencies
+      ansible.builtin.apt:
+        name:
+          - ca-certificates
+          - gnupg
+          - python3-pip
+        state: present
+
+    - name: Download Docker GPG key
+      ansible.builtin.get_url:
+        url: "https://download.docker.com/linux/{{ ansible_distribution | lower }}/gpg"
+        dest: /etc/apt/keyrings/docker.asc
+        mode: '0644'
+        force: true
+
+    - name: Add Docker repository
+      ansible.builtin.deb822_repository:
+        name: docker
+        types:
+          - deb
+        uris:
+          - "https://download.docker.com/linux/{{ ansible_facts['distribution'] | lower }}"
+        suites:
+          - "{{ ansible_facts['distribution_release'] }}"
+        components:
+          - stable
+        architectures:
+          - "{{ 'amd64' if ansible_facts['architecture'] == 'x86_64'
+            else 'arm64' if ansible_facts['architecture'] == 'aarch64'
+            else ansible_facts['architecture'] }}"
+        signed_by: /etc/apt/keyrings/docker.asc
+        state: present
+        install_python_debian: true
+
+    - name: Install docker
+      become: true
+      become_user: root
+      ansible.builtin.apt:
+        update_cache: true
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+          - python3-virtualenv
+        state: present
+
+- name: Install Docker (Alpine)
+  become: true
+  become_user: root
+  community.general.apk:
+    update_cache: true
+    name:
+      - docker
+      - docker-cli-compose
+      - python3
+      - py3-requests
+    state: present
+  when: ansible_facts.os_family == "Alpine"
+
+- name: Docker post installation steps
   become: true
   become_user: root
   block:
-    - name: Install docker
-      community.general.apk:
-        update_cache: true
-        name:
-          - docker
-          - docker-cli-compose
-          - python3
-          - py3-requests
-        state: latest
-
     - name: "Adding user to docker group: {{ ansible_user }}"
       ansible.builtin.user:
         name: "{{ ansible_user }}"
