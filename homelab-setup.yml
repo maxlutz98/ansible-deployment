@@ -42,7 +42,6 @@
   roles:
     - tvheadend
     - arr-services
-    - container-updater
 
 - name: Docker
   hosts: reverse-proxy
