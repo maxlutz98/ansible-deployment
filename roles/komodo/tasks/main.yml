@@ -27,7 +27,7 @@
     clone: true
     update: true
 
-- name: Create .env file
+- name: Create secret.env file
   ansible.builtin.template:
     src: secret.env.j2
     dest: "{{ komodo_repo_dir }}/secret.env"
