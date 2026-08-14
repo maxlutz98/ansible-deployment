@@ -14,6 +14,7 @@
 
 - name: Reboot host if required
   become: true
+  throttle: 1
   ansible.builtin.reboot:
     msg: "Reboot initiated by Ansible after system updates"
     connect_timeout: 5
