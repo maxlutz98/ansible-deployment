@@ -1,0 +1,4 @@
+- name: Restore configuration of all docker hosts
+  hosts: docker
+  roles:
+    - restore
